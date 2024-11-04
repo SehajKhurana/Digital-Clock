@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Digital Clock</title>
+  <style>
+    /* Global styles (index.css) */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #282c34;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    
+    a {
+      color: #61dafb;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    .centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Digital clock styles (DigitalClock.css) */
+    .digital-clock {
+      font-size: 48px;
+      font-weight: bold;
+      text-align: center;
+      padding: 20px;
+      border: 3px solid #61dafb;
+      border-radius: 10px;
+      color: #61dafb;
+      background-color: #20232a;
+    }
+  </style>
+</head>
+<body>
+  <!-- Root element for React app -->
+  <div id="root"></div>
+
+  <!-- React and Babel libraries -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- React Application -->
+  <script type="text/babel">
+    // DigitalClock component
+    const DigitalClock = () => {
+      const [time, setTime] = React.useState(new Date());
+
+      React.useEffect(() => {
+        const intervalId = setInterval(() => {
+          setTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(intervalId); // Cleanup interval on unmount
+      }, []);
+
+      const formattedTime = time.toLocaleTimeString();
+
+      return (
+        <div className="digital-clock">
+          {formattedTime}
+        </div>
+      );
+    };
+
+    // Main App component
+    const App = () => {
+      return (
+        <div className="App centered">
+          <DigitalClock />
+        </div>
+      );
+    };
+
+    // Render App component into the root element
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    );
+  </script>
+</body>
+</html>
+
